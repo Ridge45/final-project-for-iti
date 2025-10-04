@@ -73,53 +73,43 @@ def remove_order_item(request, order_pk, item_pk):
     return redirect('orders:add_items', pk=order.pk)
 
 # Customer cart functionality
+@login_required
 def get_or_create_cart(request):
-    """Get or create a cart for the current user/session"""
-    if request.user.is_authenticated:
-        cart, created = Order.objects.get_or_create(
-            user=request.user,
-            status='cart',
-            defaults={'customer_name': request.user.username}
-        )
-    else:
-        # For anonymous users, we'll use session-based cart
-        session_key = request.session.session_key
-        if not session_key:
-            request.session.create()
-            session_key = request.session.session_key
-        
-        cart, created = Order.objects.get_or_create(
-            customer_name=f"Guest_{session_key[:8]}",
-            status='cart',
-            defaults={'phone': 'N/A'}
-        )
+    """Get or create a cart for the current user"""
+    cart, created = Order.objects.get_or_create(
+        user=request.user,
+        status='cart',
+        defaults={'customer_name': request.user.username}
+    )
     return cart
 
+@login_required
 def add_to_cart(request, item_id):
     """Add item to cart"""
     item = get_object_or_404(Item, pk=item_id)
     cart = get_or_create_cart(request)
-    
+
     # Check if item already in cart
     order_item, created = OrderItem.objects.get_or_create(
         order=cart,
         item=item,
         defaults={'quantity': 1}
     )
-    
+
     if not created:
         order_item.quantity += 1
         order_item.save()
-    
+
     messages.success(request, f'{item.name} added to cart!')
     return redirect('menu:customer_menu')
 
+@login_required
 def cart_view(request):
     """View cart contents"""
     cart = get_or_create_cart(request)
     items = cart.items.select_related('item').all()
     total = cart.total_price()
-    
+
     context = {
         'cart': cart,
         'items': items,
@@ -127,11 +117,12 @@ def cart_view(request):
     }
     return render(request, 'orders/cart.html', context)
 
+@login_required
 def update_cart_item(request, item_id):
     """Update quantity of item in cart"""
     cart = get_or_create_cart(request)
     order_item = get_object_or_404(OrderItem, order=cart, item_id=item_id)
-    
+
     if request.method == 'POST':
         quantity = int(request.POST.get('quantity', 1))
         if quantity <= 0:
@@ -139,9 +130,10 @@ def update_cart_item(request, item_id):
         else:
             order_item.quantity = quantity
             order_item.save()
-    
+
     return redirect('orders:cart')
 
+@login_required
 def remove_from_cart(request, item_id):
     """Remove item from cart"""
     cart = get_or_create_cart(request)
@@ -150,10 +142,11 @@ def remove_from_cart(request, item_id):
     messages.info(request, f'{order_item.item.name} removed from cart')
     return redirect('orders:cart')
 
+@login_required
 def checkout(request):
     """Checkout process"""
     cart = get_or_create_cart(request)
-    
+
     if request.method == 'POST':
         # Update cart with customer info
         cart.customer_name = request.POST.get('customer_name', '')
@@ -161,10 +154,10 @@ def checkout(request):
         cart.payment_method = request.POST.get('payment_method', 'cash')
         cart.status = 'pending'
         cart.save()
-        
+
         messages.success(request, 'Order placed successfully! We will contact you soon.')
         return redirect('orders:order_success', order_id=cart.id)
-    
+
     context = {
         'cart': cart,
         'items': cart.items.select_related('item').all(),
