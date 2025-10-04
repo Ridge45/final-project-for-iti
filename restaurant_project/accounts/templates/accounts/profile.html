@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="hero-section">
+  <div class="container">
+    <h1 class="display-4 fw-bold mb-3">
+      <i class="fas fa-user-circle me-3"></i>Your Profile
+    </h1>
+    <p class="lead">Manage your account information</p>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="mb-4">
+          <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center" 
+               style="width: 120px; height: 120px;">
+            <i class="fas fa-user fa-3x text-white"></i>
+          </div>
+        </div>
+        <h3 class="text-primary fw-bold">{{ user.username }}</h3>
+        <p class="text-muted mb-4">Restaurant Manager</p>
+        
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <div class="card bg-light">
+              <div class="card-body">
+                <h5 class="card-title text-primary">
+                  <i class="fas fa-calendar me-2"></i>Member Since
+                </h5>
+                <p class="card-text">{{ user.date_joined|date:"F d, Y" }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="card bg-light">
+              <div class="card-body">
+                <h5 class="card-title text-primary">
+                  <i class="fas fa-clock me-2"></i>Last Login
+                </h5>
+                <p class="card-text">{{ user.last_login|date:"F d, Y H:i" }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+          <a href="{% url 'menu:item_list' %}" class="btn btn-primary btn-lg">
+            <i class="fas fa-utensils me-2"></i>Manage Menu
+          </a>
+          <a href="{% url 'orders:order_list' %}" class="btn btn-success btn-lg">
+            <i class="fas fa-shopping-cart me-2"></i>View Orders
+          </a>
+          <a href="{% url 'accounts:logout' %}" class="btn btn-outline-danger btn-lg">
+            <i class="fas fa-sign-out-alt me-2"></i>Logout
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

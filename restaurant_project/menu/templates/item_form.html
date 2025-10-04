@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="hero-section">
+  <div class="container">
+    <h1 class="display-4 fw-bold mb-3">
+      <i class="fas fa-{% if object %}edit{% else %}plus{% endif %} me-3"></i>
+      {% if object %}Edit Menu Item{% else %}Add New Menu Item{% endif %}
+    </h1>
+    <p class="lead">{% if object %}Update your delicious dish{% else %}Create a new delicious dish for your menu{% endif %}</p>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="{{ form.name.id_for_label }}" class="form-label">
+                <i class="fas fa-utensils me-2"></i>Item Name
+              </label>
+              {{ form.name }}
+              {% if form.name.errors %}
+                <div class="text-danger">{{ form.name.errors }}</div>
+              {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="{{ form.price.id_for_label }}" class="form-label">
+                <i class="fas fa-dollar-sign me-2"></i>Price
+              </label>
+              {{ form.price }}
+              {% if form.price.errors %}
+                <div class="text-danger">{{ form.price.errors }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="{{ form.description.id_for_label }}" class="form-label">
+              <i class="fas fa-align-left me-2"></i>Description
+            </label>
+            {{ form.description }}
+            {% if form.description.errors %}
+              <div class="text-danger">{{ form.description.errors }}</div>
+            {% endif %}
+          </div>
+          <div class="mb-4">
+            <label for="{{ form.image.id_for_label }}" class="form-label">
+              <i class="fas fa-camera me-2"></i>Dish Photo
+            </label>
+            {{ form.image }}
+            {% if form.image.errors %}
+              <div class="text-danger">{{ form.image.errors }}</div>
+            {% endif %}
+            <div class="form-text">
+              <i class="fas fa-info-circle me-1"></i>Upload a beautiful photo of your dish to make it more appealing to customers
+            </div>
+          </div>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{% url 'menu:item_list' %}" class="btn btn-secondary btn-lg">
+              <i class="fas fa-times me-2"></i>Cancel
+            </a>
+            <button type="submit" class="btn btn-primary btn-lg">
+              <i class="fas fa-save me-2"></i>Save Item
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .form-control, .form-select {
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    padding: 12px 15px;
+    transition: all 0.3s ease;
+  }
+  .form-control:focus, .form-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+  }
+  .form-label {
+    font-weight: 600;
+    color: #495057;
+  }
+  
+  /* Custom file input styling */
+  .form-control[type="file"] {
+    padding: 8px 15px;
+    border: 2px dashed #667eea;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    transition: all 0.3s ease;
+  }
+  .form-control[type="file"]:hover {
+    border-color: #5a67d8;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+  }
+  .form-control[type="file"]:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+  }
+  
+  .form-text {
+    color: #6c757d;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+  }
+</style>
+{% endblock %}

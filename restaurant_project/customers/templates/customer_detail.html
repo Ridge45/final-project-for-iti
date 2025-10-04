@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ customer.name }}</h2>
+<p>Email: {{ customer.email }}</p>
+<p>Phone: {{ customer.phone }}</p>
+
+<h4>Orders</h4>
+<table class="table">
+  <thead><tr><th>Order ID</th><th>Created</th><th>Total</th><th></th></tr></thead>
+  <tbody>
+    {% for order in customer.orders.all %}
+    <tr>
+      <td>{{ order.id }}</td>
+      <td>{{ order.created_at }}</td>
+      <td>{{ order.total_price }}</td>
+      <td><a class="btn btn-sm btn-primary" href="{% url 'orders:order_detail' order.pk %}">View</a></td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4">No orders yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

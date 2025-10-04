@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="hero-section">
+  <div class="container">
+    <h1 class="display-4 fw-bold mb-3">
+      <i class="fas fa-history me-3"></i>My Orders History
+    </h1>
+    <p class="lead">View all your past and current orders</p>
+  </div>
+</div>
+
+{% if orders %}
+  <div class="row">
+    {% for order in orders %}
+    <div class="col-lg-6 col-xl-4 mb-4">
+      <div class="card h-100">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <h6 class="mb-0">
+            <i class="fas fa-hashtag me-1"></i>Order #{{ order.id }}
+          </h6>
+          <span class="badge {% if order.status == 'completed' %}bg-success{% elif order.status == 'pending' %}bg-warning{% else %}bg-info{% endif %}">
+            {{ order.get_status_display }}
+          </span>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <h6 class="text-muted mb-1">Total Amount</h6>
+            <h5 class="text-success mb-0">
+              <i class="fas fa-dollar-sign me-1"></i>{{ order.total_price }}
+            </h5>
+          </div>
+          <div class="mb-3">
+            <h6 class="text-muted mb-1">Order Date</h6>
+            <p class="mb-0">
+              <i class="fas fa-calendar-alt me-2"></i>{{ order.created_at|date:'F d, Y' }}
+            </p>
+          </div>
+          <div class="mb-3">
+            <h6 class="text-muted mb-1">Time</h6>
+            <p class="mb-0">
+              <i class="fas fa-clock me-2"></i>{{ order.created_at|date:'H:i' }}
+            </p>
+          </div>
+          {% if order.items.all %}
+            <div class="mb-0">
+              <h6 class="text-muted mb-2">Items Ordered</h6>
+              <ul class="list-unstyled">
+                {% for item in order.items.all %}
+                  <li class="mb-1">
+                    <i class="fas fa-utensils me-2 text-primary"></i>
+                    {{ item.item.name }} × {{ item.quantity }}
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="text-center py-5">
+    <div class="card">
+      <div class="card-body">
+        <i class="fas fa-receipt fa-4x text-muted mb-3"></i>
+        <h3 class="text-muted">No orders yet</h3>
+        <p class="text-muted">You haven't placed any orders yet. Start ordering delicious food!</p>
+        <a class="btn btn-primary btn-lg" href="{% url 'menu:customer_menu' %}">
+          <i class="fas fa-utensils me-2"></i>Browse Menu
+        </a>
+      </div>
+    </div>
+  </div>
+{% endif %}
+{% endblock %}
