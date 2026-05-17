@@ -11,38 +11,6 @@ A comprehensive, production-grade **Django-based web application** designed to s
   <img src="iti last.gif" alt="Restaurant Management Preview" width="100%" style="border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);"/>
 </p>
 
----
-
-## Architecture & Features
-
-This system is built using Django's **MVT (Model-View-Template)** architecture, fully decoupled into modular, reusable applications to ensure maximum scale and ease of maintenance:
-
-```mermaid
-graph TD
-    %% Global Structure
-    subgraph "Restaurant Django Core"
-        A[Global Settings & Root URL Routing] --> B[accounts App]
-        A --> C[menu App]
-        A --> D[orders App]
-        A --> E[customers App]
-    end
-
-    %% Database integration
-    subgraph "Persistent Storage"
-        B & C & D & E -->|ORM Queries| F[(PostgreSQL Database)]
-        C -->|Pillow / Media Uploads| G[Media/Images Storage]
-    end
-
-    %% User roles
-    subgraph "User Roles & Permissions"
-        H[Customer UI] -->|Views Menu / Cart| D
-        I[Staff / Admin Dashboard] -->|Manages Items / Status| C & D & E
-    end
-    
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style F fill:#bbf,stroke:#333,stroke-width:2px
-    style I fill:#ff9,stroke:#333,stroke-width:2px
-```
 
 ### 1. Accounts Module (accounts/)
 * **Secure Authentication:** Integrates standard Django auth with custom security filters.
