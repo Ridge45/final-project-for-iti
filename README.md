@@ -1,68 +1,108 @@
 # Restaurant Management System
 
-A comprehensive **Django-based web application** designed to streamline restaurant operations. This system allows for efficient management of menus, orders, customers, and user accounts, providing a user-friendly interface for both staff and administrators.
+<p align="center">
+  <img src="demo.gif" width="900"/>
+</p>
+
+A comprehensive Django-based web application designed to streamline restaurant operations. The system enables efficient management of menus, orders, customers, and user accounts through a clean and user-friendly interface for both staff and administrators.
+
+---
 
 ## Features
 
-- **Menu M**: edit, and manage restaurant menu items with descriptions, prices, and images.  
-- **Order Processing**: Handle customer orders with various statuses 
-- **Customer Management**: Maintain a database of customers with contact information and order history.  
-- **User Authentication**: Secure login system for staff and administrators using Django's built-in authentication.  
-- **Admin Interface**: Powerful Django admin panel for easy data management.  
-- **Media Handling**: Support for uploading and displaying menu item images.  
-- **Responsive Design**: Clean, user-friendly interface built with Django templates.  
+- Menu Management  
+  Add, edit, and manage restaurant menu items with descriptions, prices, and images.
+
+- Order Processing  
+  Handle customer orders with multiple order statuses.
+
+- Customer Management  
+  Store customer information and track order history.
+
+- User Authentication  
+  Secure login system using Django authentication.
+
+- Admin Dashboard  
+  Powerful Django admin panel for managing all system data.
+
+- Media Handling  
+  Upload and display menu item images.
+
+- Responsive Design  
+  Clean and responsive user interface.
+
+---
 
 ## Technologies Used
 
-- **Backend**: Django 4.2.25  
-- **Database**: PostgreSQL  
-- **Frontend**: HTML, CSS, JavaScript (Django Templates)  
-- **Image Processing**: Pillow  
-- **Other**: ASGI, SQLParse, Tzdata
+| Technology | Usage |
+|---|---|
+| Django 4.2.25 | Backend Framework |
+| PostgreSQL | Database |
+| HTML/CSS/JavaScript | Frontend |
+| Pillow | Image Processing |
+| ASGI / SQLParse / Tzdata | Additional Dependencies |
+
+---
 
 ## Installation
 
-  ''''''''''''''' Make sure you are on the restaurant_project forlder before running server '''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Make sure you are inside the `restaurant_project` folder before running the server.
 
+### 1. Clone the Repository
 
-### Prerequisites
+```bash
+git clone https://github.com/Ridge45/final-project-for-iti.git
+cd final-project-for-iti
+```
 
-- Python 3.8 or higher  
-- PostgreSQL installed and running  
-- Git  
+### 2. Create Virtual Environment
 
-### Setup Instructions
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Ridge45/final-project-for-iti.git
-   cd final-project-for-iti
-Create a virtual environment:
-
-bash
-Copy code
+```bash
 python -m venv .venv
-# On Linux/Mac
-source .venv/bin/activate
-# On Windows
+```
+
+### 3. Activate Virtual Environment
+
+#### Windows
+
+```bash
 .venv\Scripts\activate
-Install dependencies:
+```
 
-bash
-Copy code
+#### Linux / macOS
+
+```bash
+source .venv/bin/activate
+```
+
+---
+
+### 4. Install Dependencies
+
+```bash
 pip install -r requirements.txt
-Set up PostgreSQL database:
+```
 
-Create a new PostgreSQL database named restaurant_db
+---
 
-Create a database user restaurant_user with password of your choice
+### 5. Configure PostgreSQL Database
 
-Update the database settings inside restaurant_project/settings.py
+Create a PostgreSQL database named:
 
-Example:
+```text
+restaurant_db
+```
 
-python
-Copy code
+Update the database settings inside:
+
+```text
+restaurant_project/settings.py
+```
+
+Example configuration:
+
+```python
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -73,30 +113,65 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-Run database migrations:
+```
 
-bash
-Copy code
+---
+
+### 6. Run Database Migrations
+
+```bash
 python manage.py migrate
-Create a superuser account:
+```
 
-bash
-Copy code
+---
+
+### 7. Create Superuser
+
+```bash
 python manage.py createsuperuser
+```
+
 Follow the prompts to create an admin account.
 
-Collect static files:
+---
 
-bash
-Copy code
+### 8. Collect Static Files
+
+```bash
 python manage.py collectstatic
-Run the development server:
+```
 
-bash
-Copy code
+---
+
+### 9. Run Development Server
+
+```bash
 python manage.py runserver
-Access the application:
+```
 
-Main site → http://127.0.0.1:8000/
+---
 
-Admin panel → http://127.0.0.1:8000/admin/
+## Access the Application
+
+| Service | URL |
+|---|---|
+| Main Website | http://127.0.0.1:8000/ |
+| Admin Panel | http://127.0.0.1:8000/admin/ |
+
+---
+
+## Project Preview
+
+Add screenshots inside an `assets` folder.
+
+Example:
+
+```md
+![Home Page](assets/home.png)
+```
+
+---
+
+## Author
+
+Developed as a final project for ITI.
