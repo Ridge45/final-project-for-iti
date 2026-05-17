@@ -1,7 +1,7 @@
 # Restaurant Management System
 
 <p align="center">
-  <img src="demo.gif" width="900"/>
+  <img src="iti last.gif" width="900"/>
 </p>
 
 A comprehensive Django-based web application designed to streamline restaurant operations. The system enables efficient management of menus, orders, customers, and user accounts through a clean and user-friendly interface for both staff and administrators.
